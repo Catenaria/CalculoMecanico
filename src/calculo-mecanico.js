@@ -46,6 +46,8 @@ var construirDibujo = function (form) {
   constantes = resuelveParabola(tramo.a(), -conditions1.span/2,30, conditions1.span/2, 30);
   catenariaInicialGraph = CD.parabolaGraphMaker({a: tramo.a(), c1: constantes[0], c2: constantes[1], range:range});
   catenariaNuevaGraph   = CD.parabolaGraphMaker({a: tramo.a(), c1: constantes[0], c2: constantes[1], range:range});
+  posteIzquierdoGraph   = CD.fancyPoleMaker({x: -conditions1.span/2, height: 30});
+  posteDerechoGraph     = CD.fancyPoleMaker({x: +conditions1.span/2, height: 30});
   scene = SD.sceneMaker({div: div, range: sceneRange});
 
   //console.log(scene);
@@ -53,14 +55,16 @@ var construirDibujo = function (form) {
 
   scene.add(catenariaInicialGraph);
   scene.add(catenariaNuevaGraph);
+  scene.add(posteIzquierdoGraph);
+  scene.add(posteDerechoGraph);
 
-  scene.plotSVG();
+  scene.plotSVG(posteIzquierdoGraph);
 };
 
 var actualizarDibujo = function (form) {
 
-  var temperature = form.temperature.value;
-  var windPressure = form.windPressure.value;
+  var temperature = form.temperature2.value;
+  var windPressure = form.windPressure2.value;
 
   tramo.finalConditions.temperature = temperature;
   tramo.finalConditions.windPressure = windPressure;

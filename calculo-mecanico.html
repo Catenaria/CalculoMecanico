@@ -20,18 +20,18 @@
 
     <form>
       <h4>Construcción inicial</h4>
-      Vano:               <input type="text" value="100",  name="span">
-      Temperatura:        <input type="text" value="20",   name="temperature">  
-      Presión de viento:  <input type="text" value="0",    name="windPressure"> 
-      Tensión:            <input type="text" value="5500", name="tension">       
+      Vano:                <input type="text" value="100",  name="span">
+      Temperatura:         <input type="text" value="20",   name="temperature">  
+      Presión de viento:   <input type="text" value="0",    name="windPressure"> 
+      Tensión:             <input type="text" value="5500", name="tension">       
       <input type="button" value="Construir", onClick="if(!construido) construirDibujo(this.form);">
     </form>
     <form>
       <h4>Variaciones</h4>
-      <!-- Vano:               <input type="text" value="100",  name="span">          <br> -->
-      Temperatura:        <input type="text" value="20",   name="temperature">   
-      Presión de viento:  <input type="text" value="0",    name="windPressure">  
-      <input type="button" value="Actualizar dibujo", onClick="actualizarDibujo(this.form);">
+      Temperatura:     -20 <input type="range" min="-20", max="50", name="temperature2" onmousemove="actualizarDibujo(this.form);"
+				  value = "20" >  50; 
+      Presión de viento: 0 <input type="range" min="0", max="50000", name="windPressure2" onmousemove="actualizarDibujo(this.form);"
+				  value = "0"   > 50000
     </form>
     </p>
 

@@ -1,45 +1,78 @@
 CD = {}
 CD.PARABOLA_GRAPH_SPEC = {a: 12.5, c1: 50, c2: -12.5};
 
+
 CD.parabolaGraphMaker = function(spec) {
-	var parabolaGraphProto = SD.functionGraphMaker(CD.PARABOLA_GRAPH_SPEC);
-	console.log(parabolaGraphProto);
-	parabolaGraphProto.f = function(x) {return parabola(x,this.a,this.c1,this.c2)};
-	var newParabolaGraph = SD.objectCloner(parabolaGraphProto, spec);
-	return newParabolaGraph;
+  var parabolaGraphProto = SD.functionGraphMaker(CD.PARABOLA_GRAPH_SPEC);
+  console.log(parabolaGraphProto);
+  parabolaGraphProto.f = function(x) {return parabola(x,this.a,this.c1,this.c2)};
+  var newParabolaGraph = SD.objectCloner(parabolaGraphProto, spec);
+  return newParabolaGraph;
 }
 
 CD.catenariaGraphMaker = function(spec) {
-	var catenariaGraphProto = SD.functionGraphMaker(CD.PARABOLA_GRAPH_SPEC);
-	catenariaGraphProto.f = function(x) {return catenaria(x,this.a,this.c1,this.c2)};
-	var newCatenariaGraph = SD.objectCloner(catenariaGraphProto, spec);
-	return newCatenariaGraph;
+  var catenariaGraphProto = SD.functionGraphMaker(CD.PARABOLA_GRAPH_SPEC);
+  catenariaGraphProto.f = function(x) {return catenaria(x,this.a,this.c1,this.c2)};
+  var newCatenariaGraph = SD.objectCloner(catenariaGraphProto, spec);
+  return newCatenariaGraph;
 }
 
-CD.fancyPoleMaker = function() {
+CD.poleMaker = function(spec) {
+  var poleProto = SD.lineMaker();
+  poleProto.x = 0;
+  poleProto.y = 0;
+  poleProto.height = 30;
 
+  var newPole = SD.objectCloner(poleProto, spec);
+  newPole.color = "black";
+  newPole.updateSVG = function() {
+    poleProto.updateSVG.call(this);
+    this.svgElement.setAttribute("x1", this.x);
+    this.svgElement.setAttribute("y1", -this.y);
+    this.svgElement.setAttribute("x2", this.x);
+    this.svgElement.setAttribute("y2", -(this.y+this.height));
+  }
+  return newPole;
 } 
 
+CD.fancyPoleMaker = function(spec) {
+  var fancyPoleProto = SD.elementMaker();
+  fancyPoleProto.x = 0;
+  fancyPoleProto.y = 0;
+  fancyPoleProto.height = 30;
+  fancyPoleProto.svgTag = "g";
+
+  var newFancyPole = SD.objectCloner(fancyPoleProto, spec);
+  newFancyPole.color = "blue";
+  newFancyPole.updateSVG = function() {
+    fancyPoleProto.updateSVG.call(this);
+    this.svgElement.innerHTML = '<path d="M-8 0 L8 0 L3 -100 L-3 -100 Z" style="stroke:#660000; fill:'+this.color+';" />';
+    this.svgElement.setAttribute('transform', "translate("+this.x+","+this.y+"), scale("+(this.height/100)+")");
+  }
+  return newFancyPole;
+} 
+
+
 function FancyPole(x, y, height) {
-	this.identificator = Math.random().toString();
+  this.identificator = Math.random().toString();
   this.x = x||0;
   this.y = y||0;
   this.height = height||30;
   this.type = null;
-	this.color = "#cc3333";
-	this.updateSVG = function() {
-		if (!this.svgElement) {
-			this.svgElement = document.createElementNS("http://www.w3.org/2000/svg","g");
-			this.svgElement.classList.add("fancyPole"); 
-		}
-		if (this.parentSceneElement) {
-			this.parentSceneElement.svgElement.appendChild(this.svgElement);
-		};
-		this.svgElement.setAttribute('id', this.identificator);
-		this.svgElement.innerHTML = '<path d="M-8 0 L8 0 L3 -100 L-3 -100 Z" style="stroke:#660000; fill:'+this.color+';" />';
-		this.svgElement.setAttribute('transform', "translate("+this.x+","+this.y+"), scale("+(this.height/100)+")");
-	};
-	this.plotSVG = this.updateSVG;
+  this.color = "#cc3333";
+  this.updateSVG = function() {
+    if (!this.svgElement) {
+      this.svgElement = document.createElementNS("http://www.w3.org/2000/svg","g");
+      this.svgElement.classList.add("fancyPole"); 
+    }
+    if (this.parentSceneElement) {
+      this.parentSceneElement.svgElement.appendChild(this.svgElement);
+    };
+    this.svgElement.setAttribute('id', this.identificator);
+    this.svgElement.innerHTML = '<path d="M-8 0 L8 0 L3 -100 L-3 -100 Z" style="stroke:#660000; fill:'+this.color+';" />';
+    this.svgElement.setAttribute('transform', "translate("+this.x+","+this.y+"), scale("+(this.height/100)+")");
+  };
+  this.plotSVG = this.updateSVG;
 }
 FancyPole.prototype = new SceneElement();
 
@@ -49,36 +82,36 @@ function CatenaryGraph(a,c1,c2) {
   this.c1 = c1 || 0;
   this.c2 = c2 || 0;
   this.f = function(x) {return catenaria(x,this.a,this.c1,this.c2);};
-	this.plotSVG = function() {
-		this.updateSVG();
-		this.svgElement.classList.add("catenaryGraph"); 
-	}
+  this.plotSVG = function() {
+    this.updateSVG();
+    this.svgElement.classList.add("catenaryGraph"); 
+  }
 }
 CatenaryGraph.prototype = new FunctionGraph();
 
 function Pole(x, y, height) {
-	this.identificator = Math.random().toString();
+  this.identificator = Math.random().toString();
   this.x = x||0;
   this.y = y||0;
   this.height = height||30;
   this.type = null;
-	this.updateSVG = function() {
-		if (!this.svgElement) {
-			this.svgElement = document.createElementNS("http://www.w3.org/2000/svg","line");
-			this.svgElement.classList.add("pole"); 
-			this.svgElement.setAttribute("vector-effect", "non-scaling-stroke");
-		}
-		if (this.parentSceneElement) {
-			this.parentSceneElement.svgElement.appendChild(this.svgElement);
-		};
-		this.svgElement.setAttribute('id', this.identificator);
-		this.svgElement.setAttribute('x1', this.x);
+  this.updateSVG = function() {
+    if (!this.svgElement) {
+      this.svgElement = document.createElementNS("http://www.w3.org/2000/svg","line");
+      this.svgElement.classList.add("pole"); 
+      this.svgElement.setAttribute("vector-effect", "non-scaling-stroke");
+    }
+    if (this.parentSceneElement) {
+      this.parentSceneElement.svgElement.appendChild(this.svgElement);
+    };
+    this.svgElement.setAttribute('id', this.identificator);
+    this.svgElement.setAttribute('x1', this.x);
     this.svgElement.setAttribute('y1', -this.y);
     this.svgElement.setAttribute('x2', this.x);
     this.svgElement.setAttribute('y2', -(this.y + this.height));
     this.svgElement.setAttribute('style', "stroke:black;stroke-width:4px");
-	};
-	this.plotSVG = this.updateSVG;
+  };
+  this.plotSVG = this.updateSVG;
 }
 Pole.prototype = new SceneElement();
 
@@ -147,6 +180,6 @@ var limitaSVG = function(svg, rango) {
 }
 
 var pideLongitud = function() {
-	var longitud = window.prompt("Longitud de la linea:", 1000);
-	return longitud;
+  var longitud = window.prompt("Longitud de la linea:", 1000);
+  return longitud;
 }
