@@ -1,5 +1,5 @@
 var div = document.getElementById('divCatenaria');
-var scene = SD.sceneMaker({div: div});
+var scene;
 
 var cable = CableLA56;
 
@@ -39,26 +39,25 @@ var construirDibujo = function (form) {
   
   range      = SD.rangeMaker({xMin: -conditions1.span/2, xMax: conditions1.span/2, yMin: 0, yMax: 35});
   sceneRange = SD.rangeMaker({xMin: -conditions1.span/2-10, xMax: conditions1.span/2+10, yMin: 0, yMax: 40});
-  scene.range = sceneRange;
-  console.log(scene);
-  
+
   tramo = new Tramo(cable, conditions1, conditions2);
   tramo.sag();
 
   constantes = resuelveParabola(tramo.a(), -conditions1.span/2,30, conditions1.span/2, 30);
-  catenariaInicialGraph = CD.parabolaGraphMaker({a: tramo.a(), c1: constantes[0], c2: constantes[1]});
-  catenariaInicialGraph.range = range;
+  catenariaInicialGraph = CD.parabolaGraphMaker({a: tramo.a(), c1: constantes[0], c2: constantes[1], range:range});
+  catenariaNuevaGraph   = CD.parabolaGraphMaker({a: tramo.a(), c1: constantes[0], c2: constantes[1], range:range});
+  scene = SD.sceneMaker({div: div, range: sceneRange});
 
-  console.log(catenariaInicialGraph);
+  //console.log(scene);
+  //console.log(catenariaInicialGraph);
 
-  scene.add(catenariaInicialGraph);  
+  scene.add(catenariaInicialGraph);
+  scene.add(catenariaNuevaGraph);
 
   scene.plotSVG();
 };
 
 var actualizarDibujo = function (form) {
-
-  scene.remove(catenariaNuevaGraph);
 
   var temperature = form.temperature.value;
   var windPressure = form.windPressure.value;
@@ -69,13 +68,14 @@ var actualizarDibujo = function (form) {
   tramo.finalConditions.tension = tramo.solveChangeEquation();
   
   constantes = resuelveParabola(tramo.a(), -conditions1.span/2,30, conditions1.span/2, 30);
-  catenariaNuevaGraph = CD.parabolaGraphMaker({a: tramo.a(), c1: constantes[0], c2: constantes[1]});
-  catenariaNuevaGraph.range = range;
 
-  console.log('catenaria nueva: ', catenariaNuevaGraph);
+  catenariaNuevaGraph.a = tramo.a();
+  catenariaNuevaGraph.c1 = constantes[0];
+  catenariaNuevaGraph.c2 = constantes[1];
+  catenariaNuevaGraph.color = "turquoise";
 
-  
-  scene.add(catenariaNuevaGraph);
+  //console.log('catenaria nueva: ', catenariaNuevaGraph);
+
   scene.plotSVG();
 };      
 
