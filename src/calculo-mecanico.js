@@ -21,6 +21,9 @@ var construido = false;
 
 var construirDibujo = function (form) {
 
+  //var botonConstruir = 
+  document.getElementById("botonConstruir").style.display = 'none';
+  document.getElementById("variaciones").style.display = 'block';
   construido = true;
 
   var span = form.span.value;
@@ -59,6 +62,7 @@ var construirDibujo = function (form) {
   scene.add(posteDerechoGraph);
 
   scene.plotSVG(posteIzquierdoGraph);
+  
 };
 
 var actualizarDibujo = function (form) {
