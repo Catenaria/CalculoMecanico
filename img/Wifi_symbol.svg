@@ -1,0 +1,50 @@
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   viewBox="38 85 95 122"
+   preserveAspectRatio="none"
+   id="svg2">
+  <g
+     transform="matrix(0.80809804,0,0,0.65555881,-203.02607,-230.80175)"
+     id="g3953">
+    <path
+       d="M 308.21426,658.79071 357.14285,484.50504 406.07141,658.79071"
+       id="path3821"
+       style="fill:none;stroke:#000000;stroke-width:12.36530018;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <g
+       transform="translate(-155.3229,39.597991)"
+       id="g3914">
+      <path
+         d="M 465.17575,609.56183 547.75572,568.25487"
+         id="path3823"
+         style="fill:none;stroke:#000000;stroke-width:6.86961079;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         d="M 559.75572,609.56183 477.17575,568.25487"
+         id="path3823-6"
+         style="fill:none;stroke:#000000;stroke-width:6.86961079;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
+    <g
+       transform="matrix(0.60945085,0,0,0.60945085,44.820158,225.80818)"
+       id="g3914-5">
+      <path
+         d="M 465.17575,609.56183 547.75572,568.25487"
+         id="path3823-7"
+         style="fill:none;stroke:#000000;stroke-width:11.27180576;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         d="M 559.75572,609.56183 477.17575,568.25487"
+         id="path3823-6-6"
+         style="fill:none;stroke:#000000;stroke-width:11.27180576;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
+    <g
+       transform="matrix(0.51136035,0,0,0.51136035,95.088178,249.87912)"
+       id="g3914-9">
+      <path
+         d="M 465.17575,609.56183 547.75572,568.25487"
+         id="path3823-1"
+         style="fill:none;stroke:#000000;stroke-width:13.43399239;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         d="M 559.75572,609.56183 477.17575,568.25487"
+         id="path3823-6-4"
+         style="fill:none;stroke:#000000;stroke-width:13.43399239;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
+  </g>
+</svg>
