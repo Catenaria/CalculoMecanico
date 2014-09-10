@@ -1,8 +1,25 @@
-/* #divCatenaria { */
-/*     margin-left: auto; */
-/*     margin-right: auto; */
-/*     width:90%; */
-/* } */
+
+body {
+    background-color: #253439;
+    color: #fefefe;
+    font-family: 'Oswald', sans-serif;
+}
+
+tr td:nth-child(2){
+   text-align: right;
+}
+
+.controlSpace {
+    background-color: #f1f1f1;
+    color: #111111;
+}
+
+.titleSpace {
+}
+.titleSpace h1 {
+    color: #74dde0;
+    text-align: center;
+}
 
 .functionGraph {
     stroke-width: 3px;
@@ -10,11 +27,12 @@
     fill: none;
 }
 
-/* div > svg {  */
-/*     border: 1px dotted blue;  */
-/*     max-height:100%; */
-/*     max-width:100%; */
-/* } */
+.bottomSpace {
+    background-color: #101010;
+    color: #f1f1f1;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 1.1em;
+}
 
 #variaciones {
     display: none;

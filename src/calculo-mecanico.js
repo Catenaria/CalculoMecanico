@@ -53,9 +53,6 @@ var construirDibujo = function (form) {
   posteDerechoGraph     = CD.fancyPoleMaker({x: +conditions1.span/2, height: 30});
   scene = SD.sceneMaker({div: div, range: sceneRange});
 
-  //console.log(scene);
-  //console.log(catenariaInicialGraph);
-
   scene.add(catenariaInicialGraph);
   scene.add(catenariaNuevaGraph);
   scene.add(posteIzquierdoGraph);
@@ -80,7 +77,7 @@ var actualizarDibujo = function (form) {
   catenariaNuevaGraph.a = tramo.a();
   catenariaNuevaGraph.c1 = constantes[0];
   catenariaNuevaGraph.c2 = constantes[1];
-  catenariaNuevaGraph.color = "turquoise";
+  catenariaNuevaGraph.color = "#253439";
 
   //console.log('catenaria nueva: ', catenariaNuevaGraph);
 

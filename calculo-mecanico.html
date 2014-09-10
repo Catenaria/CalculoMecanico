@@ -1,346 +1,321 @@
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap -->
-  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  
-  <script type="text/x-mathjax-config">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script type="text/x-mathjax-config">
       MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'] ]}});
-  </script>
-  <script type="text/javascript"
-	        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-  </script>
-  <link rel="stylesheet" type="text/css" href="css/calculo-mecanico.css" media="screen" />
-  <title></title>
-</head>
-<body>
-  <div class="container">
-    <h1>Cálculo mecánico de cables</h1>
-  
-    <p>
-      Vamos a ver cómo deben tenerse en cuenta las condiciones
-      atmosféricas a la hora de calcular los parámetros de una línea
-      eléctrica. En particular, estaremos interesados en estudiar como
-      varía la <b>flecha</b>
-    </p>
-  
+    </script>
+    <script type="text/javascript"
+	    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <link rel="stylesheet" type="text/css" href="css/calculo-mecanico.css" media="screen" />
+    <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <title></title>
+  </head>
+  <body>
+    <div class="container titleSpace">
+      <hr>
+      <h1>Cálculo mecánico de cables</h1>
+      <hr>
 
-    <div class="panel panel-default">
-      <div class="panel-heading">Construcción inicial</div>
-      <div class="panel-body">
-        <form role="form">
-          <div class="row">
-            <div class="col-sm-3 form-group">
-              <label >Vano: </label>
-              <input type="text" value="100", name="span" class="form-control"> 
-            </div>
-            <div class="col-sm-3 form-group">
-              <label> Temperatura: </label>
-            <input type="text" value="20", name="temperature" class="form-control"> 
-            </div>
-            <div class="col-sm-3 form-group">
-              <label> Presión de viento: </label>
-              <input type="text" value="0", name="windPressure" class="form-control">
-            </div>
-            <div class="col-sm-3 form-group">
-            <label> Tensión: </label>
-            <input type="text" value="5500", name="tension" class="form-control">
-            </div>
-          </div>
-          <div id="botonConstruir" class="form-group">
-            <div class="col-sm-3">
-              <input type="button" class="btn btn-default" value="Construir", onClick="if(!construido) construirDibujo(this.form);">
-            </div>
-          </div>
-        </form>
+      <p>
+	Vamos a ver cómo deben tenerse en cuenta las condiciones
+	atmosféricas a la hora de calcular los parámetros de una línea
+	eléctrica. En particular, estaremos interesados en estudiar como
+	varía la <b>flecha</b>
+      </p>
       
-        <div id="variaciones">
-          <h4>Variaciones</h4>
-          <form>
-            <div class="raw">
-              <div class="col-sm-6 form-group">
-                <div class="row">
-                  <div class="col-xs-3">
-                    <label>Temperatura:</label>
-                  </div>
-                  <div class="col-xs-1">
-                    -20 
-                  </div>
-                  <div class="col-xs-7">
-                    <input type="range" min="-20", max="50", name="temperature2" onmousemove="actualizarDibujo(this.form);"
-				               value = "20" > 
-                  </div>
-                  <div class="col-xs-1">
-                    50
-                  </div>
-                </div> 
+
+      <div class="panel panel-default controlSpace">
+	<div class="panel-heading">Construcción inicial</div>
+	<div class="panel-body">
+          <form role="form">
+            <div class="row">
+              <div class="col-sm-3 form-group">
+		<label >Vano: </label>
+		<input type="text" value="100", name="span" class="form-control"> 
               </div>
-              <div class="col-sm-6 form-group">
-                <div class="row">
-                  <div class="col-xs-3">
-                    <label>Presión de viento</label>
-                  </div>
-                  <div class="col-xs-1">
-                    0 
-                  </div>
-                  <div class="col-xs-7">
-                    <input type="range" min="0", max="50000", name="windPressure2" onmousemove="actualizarDibujo(this.form);"
-				               value = "0"   >
-                  </div>
-                  <div class="col-xs-1">
-                    50000
-                  </div>
-                </div> 
+              <div class="col-sm-3 form-group">
+		<label> Temperatura: </label>
+		<input type="text" value="20", name="temperature" class="form-control"> 
+              </div>
+              <div class="col-sm-3 form-group">
+		<label> Presión de viento: </label>
+		<input type="text" value="0", name="windPressure" class="form-control">
+              </div>
+              <div class="col-sm-3 form-group">
+		<label> Tensión: </label>
+		<input type="text" value="5500", name="tension" class="form-control">
+              </div>
+            </div>
+            <div id="botonConstruir" class="form-group">
+              <div class="col-sm-3">
+		<input type="button" class="btn btn-default" value="Construir", onClick="if(!construido) construirDibujo(this.form);">
               </div>
             </div>
           </form>
-        </div>
-      </div>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <div id='divCatenaria' class="img-responsive img-rounded">
-      
-        </div>
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">Datos utilizados</div>
-      <div class="panel-body">
-
-
-        <p>
-          En este ejemplo estamos utilizando el cable que
-          mencionábamos en el artículo (LA-56) que viene caracterizado
-          por los siguientes parámetros.
-        </p>
-        <div class="row">
-          <div class="col-sm-8 col-sm-offset-2">
-            <table class="table table-striped">
-              <tr>
-	              <td>Magnitud</td>
-	              <td>Valor</td> 
-	              <td>Unidades</td>
-              </tr>
-              <tr>
-	              <td>Diametro</td>
-	              <td>$9.5$</td> 
-	              <td>[mm]</td>
-              </tr>
-              <tr>
-	              <td>Peso</td>
-	              <td>$0.189$</td> 
-	              <td>[kgf]</td>
-              </tr>
-              <tr>
-	              <td>Sección</td>
-	              <td>$54.60$</td> 
-	              <td>[mm$^2$]</td>
-              </tr>
-              <tr>
-	              <td>Coeficiente de dilatación</td>
-	              <td>$0.00001910$</td> 
-	              <td>[ºC$^{-1}$]</td>
-              </tr>
-              <tr>
-	              <td>Modulo de Young</td>
-	              <td>$8100$</td> 
-	              <td>[kgf/mm$^2$]</td>
-              </tr>
-              <tr>
-	              <td>Carga de rotura</td>
-	              <td>$1670$</td> 
-	              <td>[kgf]</td>
-              </tr>
-            </table>
+	  
+          <div id="variaciones">
+            <h4>Variaciones</h4>
+            <form>
+              <div class="raw">
+		<div class="col-sm-6 form-group">
+                  <div class="row">
+                    <div class="col-xs-3">
+                      <label>Temperatura:</label>
+                    </div>
+                    <div class="col-xs-1">
+                      -20 
+                    </div>
+                    <div class="col-xs-7">
+                      <input type="range" min="-20", max="50", name="temperature2" onmousemove="actualizarDibujo(this.form);"
+			     value = "20" > 
+                    </div>
+                    <div class="col-xs-1">
+                      50
+                    </div>
+                  </div> 
+		</div>
+		<div class="col-sm-6 form-group">
+                  <div class="row">
+                    <div class="col-xs-3">
+                      <label>Presión de viento</label>
+                    </div>
+                    <div class="col-xs-1">
+                      0 
+                    </div>
+                    <div class="col-xs-7">
+                      <input type="range" min="0", max="1000", name="windPressure2" onmousemove="actualizarDibujo(this.form);"
+			     value = "0"   >
+                    </div>
+                    <div class="col-xs-1">
+                      1000
+                    </div>
+                  </div> 
+		</div>
+              </div>
+            </form>
           </div>
-        </div>
+	</div>
       </div>
-    <p>
-      Equivalentemente, en el sistema internacional de unidades (S.I.) la tabla quedaría así:
-    </p>
+      <div class="panel panel-default">
+	<div class="panel-body">
+          <div id='divCatenaria' class="img-responsive img-rounded">
+	    
+          </div>
+	</div>
+      </div>
 
-    <table style="width:300px" border="1">
-      <tr>
-	      <td>Magnitud</td>
-	      <td>Valor</td> 
-	      <td>Unidades</td>
-      </tr>
-      <tr>
-	      <td>Diametro</td>
-	      <td>$9.5$</td> 
-	      <td>[mm]</td>
-      </tr>
-      <tr>
-	      <td>Densidad lineal</td>
-	      <td>$0.189$</td> 
-	      <td>[Kg/m]</td>
-      </tr>
-      <tr>
-	      <td>Sección</td>
-	      <td>$54.60$</td> 
-	      <td>[mm$^2$]</td>
-      </tr>
-      <tr>
-	      <td>Coeficiente de dilatación</td>
-	      <td>$1.91\times10^{-5}$</td> 
-	      <td>[ºC$^{-1}$]</td>
-      </tr>
-      <tr>
-	      <td>Modulo de Young</td>
-	      <td>$7.9461 \times 10^{10}$</td> 
-	      <td>[Pa]</td>
-      </tr>
-      <tr>
-	      <td>Carga de rotura</td>
-	      <td>$16383$</td> 
-	      <td>[N]</td>
-      </tr>
-    </table>
+      <div class="panel panel-default controlSpace">
+	<div class="panel-heading">Datos utilizados</div>
+	<div class="panel-body">
+          <p>
+            En este ejemplo estamos utilizando el cable que
+            mencionábamos en el artículo (LA-56) que viene caracterizado
+            por los siguientes parámetros. 
+          </p>
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+              <table class="table table-striped controlSpace">
+		<tr>
+		  <td>Magnitud</td>
+		  <td>Valor</td> 
+		  <td>Unidades</td>
+		</tr>
+		<tr>
+		  <td>Diametro</td>
+		  <td>$9.5$</td> 
+		  <td>[mm]</td>
+		</tr>
+		<tr>
+		  <td>Densidad lineal</td>
+		  <td>$0.189$</td> 
+		  <td>[Kg/m]</td>
+		</tr>
+		<tr>
+		  <td>Sección</td>
+		  <td>$54.60$</td> 
+		  <td>[mm$^2$]</td>
+		</tr>
+		<tr>
+		  <td>Coeficiente de dilatación</td>
+		  <td>$1.91\times10^{-5}$</td> 
+		  <td>[ºC$^{-1}$]</td>
+		</tr>
+		<tr>
+		  <td>Modulo de Young</td>
+		  <td>$7.9461 \times 10^{10}$</td> 
+		  <td>[Pa]</td>
+		</tr>
+		<tr>
+		  <td>Carga de rotura</td>
+		  <td>$16383$</td> 
+		  <td>[N]</td>
+		</tr>
+              </table>
+            </div>
+          </div>
+	</div>
 
       </div>
+      
+
+      <div class="container-fluid bottomSpace">
+	<hr>
+	<div class="row">
+	  <div class="col-md-12 col-sm-12 ">
+	    <h2>Explicación</h2>
+	    <p>
+	      A lo largo de los artículos hemos ido introduciendo las
+	      ecuaciones que modelan el comportamiento de los cables. Así fue
+	      como aparecieron los conceptos de catenaria y de flecha. En la
+	      práctica, saber calcular esta última es fundamental. Para ello,
+	      recordemos que teníamos la ecuación \[ f = \frac{g\lambda v^2}{8
+	      T} \] siendo $g$ la aceleración de la gravedad (m/s^2),
+	      $\lambda$ la densidad lineal del cable (kg/m), $v$ el vano (m) y
+	      $T$ la tensión del cable (N).
+	    </p>
+
+	    <p>
+	      Ahora bien, cuando hay viento (o incluso hielo), el peso
+	      aparente del cable cambia. La forma más cómoda de tener esto en
+	      cuenta es calcular la densidad lineal efectiva de la siguiente
+	      manera: \[ \lambda_1 = m_1 \lambda,\qquad \lambda_2 = m_2
+	      \lambda \] Así, en la situación 1 calcularíamos la densidad
+	      efectiva $\lambda_1$ cogiendo la densidad en unas condiciones
+	      estándar ($\lambda$) y multiplicándolo por un coeficiente de
+	      sobrecarga $m_1$ que dé cuenta del efecto del viento en esa
+	      situación particular. En otra situación diferente, digamos
+	      situación 2, volveríamos a tomar el dato de la densidad lineal
+	      en condiciones estándar y multiplicaríamos por un nuevo
+	      coeficiente $m_2$ que se calcularía según las nuevas
+	      condiciones.
+	    </p>
+
+	    <p>
+	      En la práctica, la situación 1 es la que tenemos cuando se
+	      realiza la instalación. Tenemos una temperatura (todavía no
+	      hemos dicho nada de ella), unos efectos de viento (que
+	      determinan $m_1$ y por tanto, $\lambda_1$), ponemos cierta
+	      tensión en el cable y acabaremos con una flecha:
+
+	      \[
+	      f_1 = \frac{g\lambda_1 v^2}{8 T_1} = \frac{g\lambda v^2}{8 T_1} m_1
+	      \]
+
+	      Lo siguiente que nos interesa es comprobar que se cumple la
+	      normativa. Esto significa que tenemos que ser capaces de
+	      calcular la flecha en otras condiciones de viento y de
+	      temperatura. Estas nuevas condiciones de viento determinan $m_2$
+	      (y por lo tanto, $\lambda_2$) y la tensión que aparece en el
+	      cable, $T_2$, lo que nos llevaría a calcular
+
+	      \[
+	      f_2 = \frac{g\lambda_2 v^2}{8 T_2} = \frac{g\lambda v^2}{8 T_2} m_2
+	      \]
+	    </p>
+
+	    <p>
+	      Lo único que nos queda por hacer es ver cómo determinamos los
+	      coeficientes de sobrecarga y las tensiones que aparecen.
+	    </p>
+	    
+	    <h3>Cálculo de m</h3>
+	    <paragraph>
+	      Por la propia definición que hemos dado, es claro que:
+	      
+	      \[
+	      m = \frac{\lambda_a}{\lambda}
+	      \]
+	      
+	      siendo $\lambda_a$ la densidad aparente. Esta se calcula sumando
+	      en forma cuadrática la contribución del viento $\lambda_v$:
+
+	      \[
+	      \lambda_a = \sqrt{\lambda^2 + \lambda_v^2} = \sqrt{\lambda^2 + (Pd)^2}
+	      \]
+
+	      donde $P$ es la presión en kg/m$^2$ que ejerce el viento y $d$
+	      el diámetro en metros del cable.
+	    </paragraph>
+
+	    <h3>Cálculo de T</h3>
+	    <paragraph>
+	      Esta es la parte más complicada. Esencialmente, hay que resolver
+	      lo que se conoce como ecuación de cambio de condiciones que se
+	      introduce en el artículo y que en unidades del sistema
+	      internacional toma la forma:
+
+	      \[
+	      \left(\frac{T_2}{g S}\right)^2 \left[\left(\frac{T_2}{g S}\right)  + A \right] = B
+	      \]
+
+	      siendo $T$ la incógnita a despejar, $S$ la sección en mm$^2$, y
+	      por último $A$ y $B$ unas constantes que determinan el cambio de
+	      condiciones, en concreto:
+
+	      \[
+	      A = \alpha \Delta\theta \frac{E}{10^6 g} - K
+	      \]
+
+	      donde $\alpha$ es el coeficiente de dilatación lineal,
+	      $\Delta\theta$ es la diferencia de temperatura entre las dos
+	      condiciones consideradas, $E$ es el módulo de Young en Pascales
+	      y $K$ viene definida por:
+
+	      \[
+	      K = \left(\frac{T_1}{g S}\right) - \left[v^2m_1^2 \frac{\lambda^2 E g}{24 T_1^2 10^6}\right]
+	      \]
+
+	      y por último:
+
+	      \[
+	      B = v^2m_2^2 \frac{\lambda^2 E}{24 g 10^6 S^2}
+	      \]
+	    </paragraph>
+
+	    <paragraph>
+	      Por lo tanto, el camino a seguir es sencillo, con los datos de
+	      la situación inicial, se calcula $m_1$, que junto con $T_1$
+	      sirve para calcular K, con los datos de la situación 2 y la
+	      constante K podemos calcular fácilmente $m_2$ y con ello A y
+	      B. Con todo esto, se calculan numéricamente las raices de la
+	      ecuación.
+	    </paragraph>
+
+	    <paragraph>
+	      Lo normal es que tengamos que repetir este proceso para todo un
+	      rango de hipóteticas temperaturas y/o vientos. En todos los
+	      casos deberíamos mirar la flecha resultante y ver que cumple la
+	      correspondiente normativa.
+	    </paragraph>
+	  </div>
+	</div>
+	<hr>
+	<div class="row">
+	  <div class="col-md-1 col-xs-1 ">
+            <img src="img/Saema.opt2.svg" class="img-responsive" alt="Responsive image">
+	  </div>
+	  <div class="col-md-11 col-xs-11 ">
+	  </div>
+	</div>
+	<hr>
+      </div>
+
     </div>
 
-    <h2>Explicación</h2>
-    <p>
-      A lo largo de los artículos hemos ido introduciendo las
-      ecuaciones que modelan el comportamiento de los cables. Así fue
-      como aparecieron los conceptos de catenaria y de flecha. En la
-      práctica, saber calcular esta última es fundamental. Para ello,
-      recordemos que teníamos la ecuación \[ f = \frac{g\lambda v^2}{8
-      T} \] siendo $g$ la aceleración de la gravedad (m/s^2),
-      $\lambda$ la densidad lineal del cable (kg/m), $v$ el vano (m) y
-      $T$ la tensión del cable (N).
-    </p>
+      <script src="lib/CatenaryCalculus/catenary.js"></script>
+      <script src="lib/sceneDraw/sceneDraw.js"></script>
+      <script src="src/catenaryDraw.js"></script>
+      <script src="src/calculo-mecanico.js"></script>
 
-    <p>
-      Ahora bien, cuando hay viento (o incluso hielo), el peso
-      aparente del cable cambia. La forma más cómoda de tener esto en
-      cuenta es calcular la densidad lineal efectiva de la siguiente
-      manera: \[ \lambda_1 = m_1 \lambda,\qquad \lambda_2 = m_2
-      \lambda \] Así, en la situación 1 calcularíamos la densidad
-      efectiva $\lambda_1$ cogiendo la densidad en unas condiciones
-      estándar ($\lambda$) y multiplicándolo por un coeficiente de
-      sobrecarga $m_1$ que dé cuenta del efecto del viento en esa
-      situación particular. En otra situación diferente, digamos
-      situación 2, volveríamos a tomar el dato de la densidad lineal
-      en condiciones estándar y multiplicaríamos por un nuevo
-      coeficiente $m_2$ que se calcularía según las nuevas
-      condiciones.
-    </p>
+      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <!-- Include all compiled plugins (below), or include individual files as needed -->
+      <script src="lib/bootstrap/js/bootstrap.min.js"></script>
 
-    <p>
-      En la práctica, la situación 1 es la que tenemos cuando se
-      realiza la instalación. Tenemos una temperatura (todavía no
-      hemos dicho nada de ella), unos efectos de viento (que
-      determinan $m_1$ y por tanto, $\lambda_1$), ponemos cierta
-      tensión en el cable y acabaremos con una flecha:
-
-      \[
-        f_1 = \frac{g\lambda_1 v^2}{8 T_1} = \frac{g\lambda v^2}{8 T_1} m_1
-      \]
-
-      Lo siguiente que nos interesa es comprobar que se cumple la
-      normativa. Esto significa que tenemos que ser capaces de
-      calcular la flecha en otras condiciones de viento y de
-      temperatura. Estas nuevas condiciones de viento determinan $m_2$
-      (y por lo tanto, $\lambda_2$) y la tensión que aparece en el
-      cable, $T_2$, lo que nos llevaría a calcular
-
-      \[
-        f_2 = \frac{g\lambda_2 v^2}{8 T_2} = \frac{g\lambda v^2}{8 T_2} m_2
-      \]
-    </p>
-
-    <p>
-      Lo único que nos queda por hacer es ver cómo determinamos los
-      coeficientes de sobrecarga y las tensiones que aparecen.
-    </p>
-    
-    <h3>Cálculo de m</h3>
-    <paragraph>
-      Por la propia definición que hemos dado, es claro que:
-      
-      \[
-      m = \frac{\lambda_a}{\lambda}
-      \]
-  
-      siendo $\lambda_a$ la densidad aparente. Esta se calcula sumando
-      en forma cuadrática la contribución del viento $\lambda_v$:
-
-      \[
-      \lambda_a = \sqrt{\lambda^2 + \lambda_v^2} = \sqrt{\lambda^2 + (Pd)^2}
-      \]
-
-      donde $P$ es la presión en kg/m$^2$ que ejerce el viento y $d$
-      el diámetro en metros del cable.
-    </paragraph>
-
-    <h3>Cálculo de T</h3>
-    <paragraph>
-      Esta es la parte más complicada. Esencialmente, hay que resolver
-      lo que se conoce como ecuación de cambio de condiciones que se
-      introduce en el artículo y que en unidades del sistema
-      internacional toma la forma:
-
-      \[
-      \left(\frac{T_2}{g S}\right)^2 \left[\left(\frac{T_2}{g S}\right)  + A \right] = B
-      \]
-
-      siendo $T$ la incógnita a despejar, $S$ la sección en mm$^2$, y
-      por último $A$ y $B$ unas constantes que determinan el cambio de
-      condiciones, en concreto:
-
-      \[
-      A = \alpha \Delta\theta \frac{E}{10^6 g} - K
-      \]
-
-      donde $\alpha$ es el coeficiente de dilatación lineal,
-      $\Delta\theta$ es la diferencia de temperatura entre las dos
-      condiciones consideradas, $E$ es el módulo de Young en Pascales
-      y $K$ viene definida por:
-
-      \[
-      K = \left(\frac{T_1}{g S}\right) - \left[v^2m_1^2 \frac{\lambda^2 E g}{24 T_1^2 10^6}\right]
-      \]
-
-      y por último:
-
-      \[
-      B = v^2m_2^2 \frac{\lambda^2 E}{24 g 10^6 S^2}
-      \]
-    </paragraph>
-
-    <paragraph>
-      Por lo tanto, el camino a seguir es sencillo, con los datos de
-      la situación inicial, se calcula $m_1$, que junto con $T_1$
-      sirve para calcular K, con los datos de la situación 2 y la
-      constante K podemos calcular fácilmente $m_2$ y con ello A y
-      B. Con todo esto, se calculan numéricamente las raices de la
-      ecuación.
-    </paragraph>
-
-    <paragraph>
-      Lo normal es que tengamos que repetir este proceso para todo un
-      rango de hipóteticas temperaturas y/o vientos. En todos los
-      casos deberíamos mirar la flecha resultante y ver que cumple la
-      correspondiente normativa.
-    </paragraph>
-
-    <br>
-    <input type="button" value="Construir tabla", onClick="if(!tablaConstruida) tableCreate();">
-
-    <script src="lib/CatenaryCalculus/catenary.js"></script>
-    <script src="lib/sceneDraw/sceneDraw.js"></script>
-    <script src="src/catenaryDraw.js"></script>
-    <script src="src/calculo-mecanico.js"></script>
-
-     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-</div>
-</body>
+  </body>
 </html>
