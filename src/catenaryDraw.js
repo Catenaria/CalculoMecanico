@@ -4,7 +4,6 @@ CD.PARABOLA_GRAPH_SPEC = {a: 12.5, c1: 50, c2: -12.5};
 
 CD.parabolaGraphMaker = function(spec) {
   var parabolaGraphProto = SD.functionGraphMaker(CD.PARABOLA_GRAPH_SPEC);
-  console.log(parabolaGraphProto);
   parabolaGraphProto.f = function(x) {return parabola(x,this.a,this.c1,this.c2)};
   var newParabolaGraph = SD.objectCloner(parabolaGraphProto, spec);
   return newParabolaGraph;

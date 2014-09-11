@@ -57,60 +57,70 @@
               </div>
             </div>
           </form>
-	  
-          <div id="variaciones">
-            <h4>Variaciones</h4>
-            <form>
-              <div class="raw">
-		<div class="col-sm-6 form-group">
-                  <div class="row">
-                    <div class="col-xs-3">
-                      <label>Temperatura:</label>
-                    </div>
-                    <div class="col-xs-1">
-                      -20 
-                    </div>
-                    <div class="col-xs-7">
-                      <input type="range" min="-20", max="50", name="temperature2" onmousemove="actualizarDibujo(this.form);"
-			     value = "20" > 
-                    </div>
-                    <div class="col-xs-1">
-                      50
-                    </div>
-                  </div> 
-		</div>
-		<div class="col-sm-6 form-group">
-                  <div class="row">
-                    <div class="col-xs-3">
-                      <label>Presión de viento</label>
-                    </div>
-                    <div class="col-xs-1">
-                      0 
-                    </div>
-                    <div class="col-xs-7">
-                      <input type="range" min="0", max="1000", name="windPressure2" onmousemove="actualizarDibujo(this.form);"
-			     value = "0"   >
-                    </div>
-                    <div class="col-xs-1">
-                      1000
-                    </div>
-                  </div> 
-		</div>
-              </div>
-            </form>
-          </div>
 	</div>
       </div>
-      <div class="panel panel-default">
-	<div class="panel-body">
+      <div class="panel panel-default" id="outputPanel">
+	<div class="panel-heading">Resultado</div>
+	<div class="panel-body controlSpace">
+	  <div class="row">
+            <div class="col-sm-8 form-gropu" id="variaciones">
+	      <h4>Variaciones</h4>
+	      <form>
+                <div class="row">
+		  <div class="col-xs-3">
+		    <label>Temperatura:</label>
+		  </div>
+		  <div class="col-xs-1">
+		    -20 
+		  </div>
+		  <div class="col-xs-6">
+		    <input type="range" min="-20", max="50", name="temperature2" onmousemove="actualizarDibujo(this.form);"
+			   value = "20" > 
+		  </div>
+		  <div class="col-xs-1">
+		    50
+		  </div>
+		</div>
+		<div class="row">
+		  <div class="col-xs-3">
+		    <label>Presión de viento:</label>
+		  </div>
+		  <div class="col-xs-1">
+		    0 
+		  </div>
+		  <div class="col-xs-6">
+		    <input type="range" min="0", max="1000", name="windPressure2" onmousemove="actualizarDibujo(this.form);"
+			   value = "0"   >
+		  </div>
+		  <div class="col-xs-1">
+		    1000
+		  </div>
+		</div>
+	      </form>
+	    </div>
+	    <div class="col-sm-4">
+	      <h4>Respuesta</h4>
+	      <div class="row">
+		<div class="col-sm-5">
+		  Flecha: 
+		</div>
+		<div class="col-sm-7" id="outputSag"> </div>
+	      </div>
+	      <div class="row">
+		<div class="col-sm-5">
+		  Tensión: 
+		</div>
+		<div class="col-sm-7" id="outputTension"> </div>
+	      </div>
+	    </div>
+	  </div>
           <div id='divCatenaria' class="img-responsive img-rounded">
-	    
           </div>
 	</div>
       </div>
 
       <div class="panel panel-default controlSpace">
-	<div class="panel-heading">Datos utilizados</div>
+	<div class="panel-heading">Datos utilizados y tabla de temperaturas</div>
 	<div class="panel-body">
           <p>
             En este ejemplo estamos utilizando el cable que
@@ -118,43 +128,49 @@
             por los siguientes parámetros. 
           </p>
           <div class="row">
-            <div class="col-sm-8 col-sm-offset-2">
+            <div class="col-sm-6">
               <table class="table table-striped controlSpace">
 		<tr>
-		  <td>Magnitud</td>
-		  <td>Valor</td> 
-		  <td>Unidades</td>
+		  <th>Magnitud</th>
+		  <th>Valor</th> 
+		  <th>Unidades</th>
 		</tr>
 		<tr>
 		  <td>Diametro</td>
-		  <td>$9.5$</td> 
+		  <td>9.5</td> 
 		  <td>[mm]</td>
 		</tr>
 		<tr>
 		  <td>Densidad lineal</td>
-		  <td>$0.189$</td> 
+		  <td>0.189</td> 
 		  <td>[Kg/m]</td>
 		</tr>
 		<tr>
 		  <td>Sección</td>
-		  <td>$54.60$</td> 
-		  <td>[mm$^2$]</td>
+		  <td>54.60</td> 
+		  <td>[mm<sup>2</sup>]</td>
 		</tr>
 		<tr>
 		  <td>Coeficiente de dilatación</td>
-		  <td>$1.91\times10^{-5}$</td> 
-		  <td>[ºC$^{-1}$]</td>
+		  <td>1.91 x 10<sup>-5</sup></td> 
+		  <td>[<sup>º</sup>C<sup>-1</sup>]</td>
 		</tr>
 		<tr>
 		  <td>Modulo de Young</td>
-		  <td>$7.9461 \times 10^{10}$</td> 
+		  <td>7.9461 x 10<sup>10</sup></td> 
 		  <td>[Pa]</td>
 		</tr>
 		<tr>
 		  <td>Carga de rotura</td>
-		  <td>$16383$</td> 
+		  <td>16383</td> 
 		  <td>[N]</td>
 		</tr>
+              </table>
+            </div>
+
+	    <div class="col-sm-6">
+              <table class="table table-striped controlSpace"  id="temperatureTable">
+
               </table>
             </div>
           </div>

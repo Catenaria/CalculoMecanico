@@ -8,6 +8,9 @@ body {
 tr td:nth-child(2){
    text-align: right;
 }
+tr th:nth-child(2){
+   text-align: right;
+}
 
 .controlSpace {
     background-color: #f1f1f1;
@@ -34,6 +37,6 @@ tr td:nth-child(2){
     font-size: 1.1em;
 }
 
-#variaciones {
+#outputPanel {
     display: none;
 }

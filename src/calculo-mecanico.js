@@ -23,13 +23,16 @@ var construirDibujo = function (form) {
 
   //var botonConstruir = 
   document.getElementById("botonConstruir").style.display = 'none';
-  document.getElementById("variaciones").style.display = 'block';
+  document.getElementById("outputPanel").style.display = 'block';
   construido = true;
 
   var span = form.span.value;
   var temperature = form.temperature.value;
   var windPressure = form.windPressure.value;
   var tension = form.tension.value;
+
+  var tensionOutput = document.getElementById('outputTension');
+  var sagOutput     = document.getElementById('outputSag');
 
   conditions1.span = span;
   conditions1.temperature = temperature;
@@ -41,7 +44,7 @@ var construirDibujo = function (form) {
   conditions2.windPressure = windPressure;
   
   range      = SD.rangeMaker({xMin: -conditions1.span/2, xMax: conditions1.span/2, yMin: 0, yMax: 35});
-  sceneRange = SD.rangeMaker({xMin: -conditions1.span/2-10, xMax: conditions1.span/2+10, yMin: 0, yMax: 40});
+  sceneRange = SD.rangeMaker({xMin: -conditions1.span/2-10, xMax: conditions1.span/2+10, yMin: 0, yMax: 35});
 
   tramo = new Tramo(cable, conditions1, conditions2);
   tramo.sag();
@@ -59,6 +62,10 @@ var construirDibujo = function (form) {
   scene.add(posteDerechoGraph);
 
   scene.plotSVG(posteIzquierdoGraph);
+
+  tableCreate(0,24);
+  outputSag.innerHTML = ''+tramo.sag().toFixed(2)+' metros';
+  outputTension.innerHTML = ''+tramo.finalConditions.tension.toFixed(2)+' Newtons';
   
 };
 
@@ -79,41 +86,41 @@ var actualizarDibujo = function (form) {
   catenariaNuevaGraph.c2 = constantes[1];
   catenariaNuevaGraph.color = "#253439";
 
-  //console.log('catenaria nueva: ', catenariaNuevaGraph);
-
   scene.plotSVG();
+  outputSag.innerHTML = ''+tramo.sag().toFixed(2)+' metros';
+  outputTension.innerHTML = ''+tramo.finalConditions.tension.toFixed(2)+' Newtons';
 };      
 
 var tablaConstruida = false;
-function tableCreate(){
+function tableCreate(min, max){
   tablaConstruida = true;
-  var body=document.getElementsByTagName('body')[0];
-  var tbl=document.createElement('table');
-  tbl.style.width='100%';
-  tbl.setAttribute('border','1');
+  //var body=document.getElementsByTagName('body')[0];
+  var tbl=document.getElementById('temperatureTable');
+  //tbl.style.width='100%';
+  //tbl.setAttribute('border','1');
   var tbdy=document.createElement('tbody');
-  var outputTable = tramo.table(0,40,5);
-  var titulo = ['Temperatura (ºC)', 'Tension (N)', 'Flecha (m)']
+  var outputTable = tramo.table(min,max,5);
+  var titulo = ['Temperatura (<sup>º</sup>C)', 'Tension (N)', 'Flecha (m)']
   var tr=document.createElement('tr');
 
   for(var i=-1;i<outputTable.length;i++){
     var tr=document.createElement('tr');
     if(i==-1) {
       for(var j=0;j<titulo.length;j++){
-	var td=document.createElement('td');
-	td.appendChild(document.createTextNode(titulo[j]))
-	tr.appendChild(td)
+	var th=document.createElement('th');
+	th.innerHTML = titulo[j];
+	tr.appendChild(th)
       }
     }
     else {
       for(var j=0;j<outputTable[i].length;j++){
 	var td=document.createElement('td');
-	td.appendChild(document.createTextNode(outputTable[i][j].toFixed(2)))
+	td.innerHTML = outputTable[i][j].toFixed(2)
 	tr.appendChild(td)
       }
     }
     tbdy.appendChild(tr);
   }
   tbl.appendChild(tbdy);
-  body.appendChild(tbl)
+  //body.appendChild(tbl)
 }
