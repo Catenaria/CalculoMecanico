@@ -16,7 +16,10 @@ var catenariaInicialGraph;
 var catenariaNuevaGraph;
 var posteIzquierdoGraph;
 var posteDerechoGraph;
+var arrow1, arrow2;
+var topLine, bottomLine1, bottomLine2;
 var construido = false;
+var height = 30;
 
 
 var construirDibujo = function (form) {
@@ -48,7 +51,7 @@ var construirDibujo = function (form) {
   conditions2.windPressure = windPressure;
   
   range      = SD.rangeMaker({xMin: -conditions1.span/2, xMax: conditions1.span/2, yMin: 0, yMax: 35});
-  sceneRange = SD.rangeMaker({xMin: -conditions1.span/2-10, xMax: conditions1.span/2+10, yMin: 0, yMax: 35});
+  sceneRange = SD.rangeMaker({xMin: -conditions1.span/2-15, xMax: conditions1.span/2+10, yMin: 0, yMax: 35});
 
   tramo = new Tramo(cable, conditions1, conditions2);
   tramo.sag();
@@ -56,8 +59,15 @@ var construirDibujo = function (form) {
   constantes = resuelveParabola(tramo.a(), -conditions1.span/2,30, conditions1.span/2, 30);
   catenariaInicialGraph = CD.parabolaGraphMaker({a: tramo.a(), c1: constantes[0], c2: constantes[1], range:range});
   catenariaNuevaGraph   = CD.parabolaGraphMaker({a: tramo.a(), c1: constantes[0], c2: constantes[1], range:range});
-  posteIzquierdoGraph   = CD.fancyPoleMaker({x: -conditions1.span/2, height: 30});
-  posteDerechoGraph     = CD.fancyPoleMaker({x: +conditions1.span/2, height: 30});
+  posteIzquierdoGraph   = CD.fancyPoleMaker({x: -conditions1.span/2, height: height});
+  posteDerechoGraph     = CD.fancyPoleMaker({x: +conditions1.span/2, height: height});
+
+  arrow1       = SD.lineMaker({x1:-span/2-5,  x2:-span/2-5, y1:height, y2: catenariaInicialGraph.f(0), style: '>-<', arrowSize:1});
+  arrow2       = SD.lineMaker({x1:-span/2-10, x2:-span/2-10, y1:height, y2: catenariaNuevaGraph.f(0), style: '>-<', arrowSize:1});
+  topLine      = SD.lineMaker({x1:-span/2-12, x2: span/2, y1: height, y2: height, style: '--'});
+  bottomLine1  = SD.lineMaker({x1:-span/2-12, x2: span/2, y1: catenariaInicialGraph.f(0), y2: catenariaInicialGraph.f(0), style: '--'});
+  bottomLine2  = SD.lineMaker({x1:-span/2-12, x2: span/2, y1: catenariaNuevaGraph.f(0), y2: catenariaNuevaGraph.f(0), style: '--'});
+
   scene = SD.sceneMaker({div: div, range: sceneRange});
 
   catenariaNuevaGraph.color = '#1e88ab';
@@ -66,6 +76,12 @@ var construirDibujo = function (form) {
   scene.add(catenariaNuevaGraph);
   scene.add(posteIzquierdoGraph);
   scene.add(posteDerechoGraph);
+
+  scene.add(arrow1);
+  scene.add(arrow2);
+  scene.add(topLine);
+  scene.add(bottomLine1);
+  scene.add(bottomLine2);
 
   scene.plotSVG(posteIzquierdoGraph);
 
@@ -97,6 +113,15 @@ var actualizarDibujo = function (form) {
   catenariaNuevaGraph.c1 = constantes[0];
   catenariaNuevaGraph.c2 = constantes[1];
   catenariaNuevaGraph.color = '#1e88ab';
+  
+  arrow1.y2 = catenariaInicialGraph.f(0);
+  arrow2.y2 = catenariaNuevaGraph.f(0);
+
+  bottomLine1.y1 = arrow1.y2;
+  bottomLine1.y2 = arrow1.y2;
+  
+  bottomLine2.y1 = arrow2.y2;
+  bottomLine2.y2 = arrow2.y2;
 
   scene.plotSVG();
   outputSag.innerHTML = ''+tramo.sag().toFixed(2)+' metros';
