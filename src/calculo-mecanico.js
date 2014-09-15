@@ -24,6 +24,10 @@ var construirDibujo = function (form) {
   //var botonConstruir = 
   document.getElementById("botonConstruir").style.display = 'none';
   document.getElementById("outputPanel").style.display = 'block';
+  document.getElementById("cableTable").className="col-sm-6";
+  document.getElementById("cableTableDescription").className="col-sm-6";
+  document.getElementById("temperatureTableDescription").style.display = 'block';
+
   construido = true;
 
   var span = form.span.value;
@@ -56,6 +60,8 @@ var construirDibujo = function (form) {
   posteDerechoGraph     = CD.fancyPoleMaker({x: +conditions1.span/2, height: 30});
   scene = SD.sceneMaker({div: div, range: sceneRange});
 
+  catenariaNuevaGraph.color = '#1e88ab';
+
   scene.add(catenariaInicialGraph);
   scene.add(catenariaNuevaGraph);
   scene.add(posteIzquierdoGraph);
@@ -64,8 +70,14 @@ var construirDibujo = function (form) {
   scene.plotSVG(posteIzquierdoGraph);
 
   tableCreate(0,24);
+
   outputSag.innerHTML = ''+tramo.sag().toFixed(2)+' metros';
   outputTension.innerHTML = ''+tramo.finalConditions.tension.toFixed(2)+' Newtons';
+  document.getElementById("temperatureTableDescription").innerHTML = '<strong>Tabla 2.</strong> Para un rango \
+      de temperaturas de 0 a 25 <sup>º</sup>C, mostramos la tensión y la flecha obtenidas, teniendo en cuenta \
+      que estamos trabajando con un vano de ' +span+ ' metros, y que en condiciones iniciales teníamos una    \
+      tensión de ' +tension+ 'N, una temperatura de '+temperature+ '<sup>º</sup>C y una presión de viento de  \
+      ' +windPressure+ 'N/m<sup>2</sup>.';
   
 };
 
@@ -84,11 +96,11 @@ var actualizarDibujo = function (form) {
   catenariaNuevaGraph.a = tramo.a();
   catenariaNuevaGraph.c1 = constantes[0];
   catenariaNuevaGraph.c2 = constantes[1];
-  catenariaNuevaGraph.color = "#253439";
+  catenariaNuevaGraph.color = '#1e88ab';
 
   scene.plotSVG();
   outputSag.innerHTML = ''+tramo.sag().toFixed(2)+' metros';
-  outputTension.innerHTML = ''+tramo.finalConditions.tension.toFixed(2)+' Newtons';
+  outputTension.innerHTML = ''+tramo.finalConditions.tension.toFixed(0)+' Newtons';
 };      
 
 var tablaConstruida = false;

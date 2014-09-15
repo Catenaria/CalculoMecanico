@@ -40,3 +40,12 @@ tr th:nth-child(2){
 #outputPanel {
     display: none;
 }
+
+#temperatureTableDescription {
+    display: none;
+}
+
+#explicacion {
+    text-align: justify;
+    text-justify: inter-word;
+}
