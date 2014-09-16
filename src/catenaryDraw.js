@@ -1,5 +1,5 @@
 CD = {}
-CD.PARABOLA_GRAPH_SPEC = {a: 12.5, c1: 50, c2: -12.5};
+CD.PARABOLA_GRAPH_SPEC = {a: 12.5, c1: 50, c2: -12.5, style:"-p", width:"3px"};
 
 
 CD.parabolaGraphMaker = function(spec) {

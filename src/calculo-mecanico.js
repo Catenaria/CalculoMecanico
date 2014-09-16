@@ -62,11 +62,11 @@ var construirDibujo = function (form) {
   posteIzquierdoGraph   = CD.fancyPoleMaker({x: -conditions1.span/2, height: height});
   posteDerechoGraph     = CD.fancyPoleMaker({x: +conditions1.span/2, height: height});
 
-  arrow1       = SD.lineMaker({x1:-span/2-5,  x2:-span/2-5, y1:height, y2: catenariaInicialGraph.f(0), style: '>-<', arrowSize:1});
-  arrow2       = SD.lineMaker({x1:-span/2-10, x2:-span/2-10, y1:height, y2: catenariaNuevaGraph.f(0), style: '>-<', arrowSize:1});
-  topLine      = SD.lineMaker({x1:-span/2-12, x2: span/2, y1: height, y2: height, style: '--'});
-  bottomLine1  = SD.lineMaker({x1:-span/2-12, x2: span/2, y1: catenariaInicialGraph.f(0), y2: catenariaInicialGraph.f(0), style: '--'});
-  bottomLine2  = SD.lineMaker({x1:-span/2-12, x2: span/2, y1: catenariaNuevaGraph.f(0), y2: catenariaNuevaGraph.f(0), style: '--'});
+  arrow1       = SD.lineMaker({x1:-span/2-5,  x2:-span/2-5, y1:height, y2: catenariaInicialGraph.f(0), style: '>-<', arrowSize:1, width:"1px"});
+  arrow2       = SD.lineMaker({x1:-span/2-10, x2:-span/2-10, y1:height, y2: catenariaNuevaGraph.f(0), style: '>-<', arrowSize:1, width:"1px"});
+  topLine      = SD.lineMaker({x1:-span/2-12, x2: span/2, y1: height, y2: height, style: '--', width:"1px"});
+  bottomLine1  = SD.lineMaker({x1:-span/2-12, x2: span/2, y1: catenariaInicialGraph.f(0), y2: catenariaInicialGraph.f(0), style: '--', width:"1px"});
+  bottomLine2  = SD.lineMaker({x1:-span/2-12, x2: span/2, y1: catenariaNuevaGraph.f(0), y2: catenariaNuevaGraph.f(0), style: '--', width:"1px"});
 
   scene = SD.sceneMaker({div: div, range: sceneRange});
 
