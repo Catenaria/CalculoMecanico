@@ -30,6 +30,14 @@ tr th:nth-child(2){
     fill: none;
 }
 
+
+.botCon {
+    background-color: #74dde0;
+    color: #000000;
+    font-size: 2em;
+}
+
+
 .bottomSpace {
     background-color: #101010;
     color: #f1f1f1;
