@@ -137,23 +137,27 @@ function tableCreate(min, max){
   //tbl.setAttribute('border','1');
   var tbdy=document.createElement('tbody');
   var outputTable = tramo.table(min,max,5);
-  var titulo = ['Temperatura (<sup>º</sup>C)', 'Tension (N)', 'Flecha (m)']
+  var titulo = ['Temperatura (<sup>º</sup>C)', 'Tension (N)', 'Flecha (m)'];
   var tr=document.createElement('tr');
 
   for(var i=-1;i<outputTable.length;i++){
     var tr=document.createElement('tr');
     if(i==-1) {
       for(var j=0;j<titulo.length;j++){
-	var th=document.createElement('th');
-	th.innerHTML = titulo[j];
-	tr.appendChild(th)
+	      var th=document.createElement('th');
+	      th.innerHTML = titulo[j];
+	      tr.appendChild(th);
       }
     }
     else {
       for(var j=0;j<outputTable[i].length;j++){
-	var td=document.createElement('td');
-	td.innerHTML = outputTable[i][j].toFixed(2)
-	tr.appendChild(td)
+	      var td=document.createElement('td');
+        if (j==0 || j==1 ) {
+          td.innerHTML = outputTable[i][j].toFixed(0);
+        } else {
+          td.innerHTML = outputTable[i][j].toFixed(2);
+        }
+	      tr.appendChild(td)
       }
     }
     tbdy.appendChild(tr);
